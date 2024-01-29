@@ -6,7 +6,7 @@ const initialGameBoard = [
     [null, null, null]
 ];
 
-export default function GameBoard () {
+export default function GameBoard ({ onSelectSquare }) {
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     function handleSelectSquare(rowIndex, colIndex) {
@@ -15,6 +15,7 @@ export default function GameBoard () {
             updateBoard[rowIndex][colIndex] = 'X';
             return updateBoard;
         });
+        onSelectSquare(); // active player will be changed after the previous has filled the box
     }
     return (
         <ol id="game-board">

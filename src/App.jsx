@@ -4,6 +4,7 @@ import { useState } from "react";
 
 function App() {
 
+  // we are adding active player check because both Player and Gameboard should know which player is currently active
   const [activePlayer, setActivePlayer] = useState('X');
 
   function handleSelectSquare() {
@@ -19,7 +20,7 @@ function App() {
           <Player initialName="Player 2" symbol="O"/>
 
         </ol>
-      <GameBoard />    
+      <GameBoard onSelectSquare = {handleSelectSquare}/>    
       </div>
 
       LOG
