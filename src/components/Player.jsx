@@ -1,12 +1,15 @@
 import { useState } from "react";
 
-export default function Player({initialName, symbol, isActive}) {
+export default function Player({initialName, symbol, isActive, onSave}) {
     const [playerName, setPlayerName] = useState(initialName)
     const [ isEditing, setIsEditing ]  = useState(false);
 
     function editPlayerName() {
         // setIsEditing(!isEditing); // never change state like this. this is not a best practice because state updats are not performed instantly but at some point in the future whenever react has time for it
         setIsEditing((editing) => !editing); // this function will be automatically called by react and will receive the guaranteed latest state value
+        if(isEditing) {
+            onSave(symbol, playerName);
+        }
     }
 
     function handleChange(event) { // onchange will pass the $event parameter in handleChange() whenever onChange is triggered
