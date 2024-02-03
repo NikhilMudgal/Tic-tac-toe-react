@@ -21,6 +21,7 @@ function deriveActivePlayer(gameTurns) {
 }
 
 function App() {
+  const [players, setPlayers] = useState({'X': 'Player 1', 'Y': 'Player 2'});
   const [gameTurns, setGameTurns] = useState([])
   // we are adding active player check because both Player and Gameboard should know which player is currently active
   // const [activePlayer, setActivePlayer] = useState('X');
@@ -45,7 +46,7 @@ function App() {
       if(firstSquareSymbol && 
         firstSquareSymbol === secondSquareSymbol &&
         firstSquareSymbol === thirdSquareSymbol) {
-          winner = firstSquareSymbol
+          winner = players[firstSquareSymbol];
       }
 
     }
@@ -69,13 +70,22 @@ function App() {
     winner = null;
   }
 
+  function onPlayerNameChange(Symbol, newName) {
+    setPlayers(prePlayers => {
+      return {
+        ...prePlayers,
+        [Symbol]: newName
+      }
+    })
+  }
+
   return (
     <main>
       <div id='game-container'>
         <ol id="players" className="highlight-player">
           {/* both these instances work indpendently */}
-          <Player initialName="Player 1" symbol ="X" isActive ={activePlayer === 'X'} />
-          <Player initialName="Player 2" symbol="O" isActive ={activePlayer === 'O'} />
+          <Player initialName="Player 1" symbol ="X" isActive ={activePlayer === 'X'} onSave = {onPlayerNameChange} />
+          <Player initialName="Player 2" symbol="O" isActive ={activePlayer === 'O'} onSave = {onPlayerNameChange} />
 
         </ol>
         {(winner || hasDraw) && <GameOver hasDraw = {hasDraw} winner = { winner }  onRestart={reMatch}/>}
